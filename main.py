@@ -5,6 +5,11 @@ a city pigeon gives to investors for its startup.
 
 Standard library only. Deterministic: the same bytes on every run.
 Output goes to /output/entry.txt (or $OUTPUT_DIR/entry.txt when set).
+
+The pitch itself leans on the pigeon's own voice: a street-level
+operator selling the one asset pigeons already own outright — every
+statue in the city — as a subscription, with the seed round priced
+in the only currency pigeons take.
 """
 
 import os
@@ -20,6 +25,8 @@ def main() -> None:
     pitch = PITCH.strip()
     assert pitch, "pitch must not be empty"
     assert "\n" not in pitch, "pitch must be a single line"
+    # Gate: the sealed scorer only accepts 1-200 characters of UTF-8
+    # text, so enforce the cap here instead of trusting the literal.
     assert len(pitch) <= 200, "pitch exceeds 200 characters: %d" % len(pitch)
     out_dir = os.environ.get("OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
